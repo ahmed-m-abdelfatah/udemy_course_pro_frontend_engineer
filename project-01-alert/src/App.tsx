@@ -1,7 +1,11 @@
-const App = () => {
-  return <div>App</div>;
-};
+import Alert from './components/alert/Alert';
 
-// components
+const App = () => {
+  return (
+    <div className='main'>
+      <Alert />
+    </div>
+  );
+};
 
 export default App;
