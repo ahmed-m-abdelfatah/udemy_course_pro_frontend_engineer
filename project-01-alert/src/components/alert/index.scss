@@ -1,3 +1,45 @@
+// Define colors
+$borderColor: rgba(225, 25, 0, 0.322);
+$errorBGColor: rgba(192, 29, 29, 0.15);
+$errorTextColor: rgba(239, 141, 141, 0.98);
+
+// Define common styles
+$borderWidth: 0.125rem;
+$borderRadius: 0.8rem;
+$paddingSize: 1.3rem;
+
 .alert-wrapper {
-  border: 2px dotted teal;
+  border: $borderWidth dotted $borderColor;
+  border-radius: $borderRadius;
+  padding: $paddingSize;
+
+  &.danger {
+    background-color: $errorBGColor;
+    color: $errorTextColor;
+  }
+
+  .alert-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        padding-right: 0.4rem;
+      }
+    }
+
+    svg {
+      margin-right: 0.8rem;
+      cursor: pointer;
+    }
+  }
+
+  p {
+    margin-top: 1.2rem;
+    line-height: 1.2;
+  }
 }
