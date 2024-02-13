@@ -1,25 +1,41 @@
-import { BellRing, X } from 'lucide-react';
+import { AlertTriangle, Ban, BellRing, Info, X } from 'lucide-react';
 import './index.scss';
 
-interface AlertProps {}
+interface AlertProps {
+  type: 'danger' | 'success' | 'warning' | 'info';
+  title: string;
+  description: string;
+}
 
-const Alert = ({}: AlertProps) => {
+const Alert = ({ type, title, description }: AlertProps) => {
+  // Define icons based on the type
+  const getIcon = (type: string) => {
+    switch (type) {
+      case 'danger':
+        return <Ban className='icon' />;
+      case 'success':
+        return <BellRing className='icon' />;
+      case 'warning':
+        return <AlertTriangle className='icon' />;
+      case 'info':
+        return <Info className='icon' />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className='alert-wrapper danger'>
+    <div className={'alert-wrapper ' + type}>
       <div className='alert-header'>
         <div className='title'>
-          <BellRing className='icon' />
-          <h4>Title</h4>
+          {getIcon(type)}
+          <h4>{title}</h4>
         </div>
 
-        <X />
+        <X className='close' />
       </div>
 
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, officia esse a recusandae quibusdam
-        voluptates obcaecati qui exercitationem cum quo illum, laboriosam nobis doloremque, excepturi accusantium
-        consequuntur inventore. Laudantium, at!
-      </p>
+      <p>{description}</p>
     </div>
   );
 };

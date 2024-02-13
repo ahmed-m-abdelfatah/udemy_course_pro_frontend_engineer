@@ -1,7 +1,16 @@
 // Define colors
-$borderColor: rgba(225, 25, 0, 0.322);
+$errorBorderColor: rgba(225, 25, 0, 0.322);
 $errorBGColor: rgba(192, 29, 29, 0.15);
 $errorTextColor: rgba(239, 141, 141, 0.98);
+$successBorderColor: rgba(0, 128, 0, 0.322);
+$successBGColor: rgba(0, 128, 0, 0.15);
+$successTextColor: rgba(0, 128, 0, 0.98);
+$warningBorderColor: rgba(255, 165, 0, 0.322);
+$warningBGColor: rgba(255, 165, 0, 0.15);
+$warningTextColor: rgba(255, 165, 0, 0.98);
+$infoBorderColor: rgba(30, 144, 255, 0.322);
+$infoBGColor: rgba(30, 144, 255, 0.15);
+$infoTextColor: rgba(30, 144, 255, 0.98);
 
 // Define common styles
 $borderWidth: 0.125rem;
@@ -9,13 +18,32 @@ $borderRadius: 0.8rem;
 $paddingSize: 1.3rem;
 
 .alert-wrapper {
-  border: $borderWidth dotted $borderColor;
   border-radius: $borderRadius;
   padding: $paddingSize;
+  margin-bottom: 1.2rem;
 
   &.danger {
+    border: $borderWidth solid $errorBorderColor;
     background-color: $errorBGColor;
     color: $errorTextColor;
+  }
+
+  &.success {
+    border: $borderWidth solid $successBorderColor;
+    background-color: $successBGColor;
+    color: $successTextColor;
+  }
+
+  &.warning {
+    border: $borderWidth solid $warningBorderColor;
+    background-color: $warningBGColor;
+    color: $warningTextColor;
+  }
+
+  &.info {
+    border: $borderWidth solid $infoBorderColor;
+    background-color: $infoBGColor;
+    color: $infoTextColor;
   }
 
   .alert-header {
@@ -26,13 +54,15 @@ $paddingSize: 1.3rem;
     .title {
       display: flex;
       align-items: center;
+      text-transform: capitalize;
+      font-size: 1.2rem;
 
       .icon {
         padding-right: 0.4rem;
       }
     }
 
-    svg {
+    .close {
       margin-right: 0.8rem;
       cursor: pointer;
     }
@@ -41,5 +71,6 @@ $paddingSize: 1.3rem;
   p {
     margin-top: 1.2rem;
     line-height: 1.2;
+    font-weight: bold;
   }
 }
