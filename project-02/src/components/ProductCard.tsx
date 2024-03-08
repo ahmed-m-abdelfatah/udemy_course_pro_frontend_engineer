@@ -28,10 +28,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
 
       <div className='flex items-center justify-between space-x-2 rounded-md mt-5'>
-        <Button className='bg-indigo-700' onClick={() => console.log('EDIT')}>
+        <Button className='bg-indigo-700 hover:bg-indigo-800' onClick={() => console.log('EDIT')}>
           EDIT
         </Button>
-        <Button className='bg-red-700' width='w-fit'>
+        <Button className='bg-red-700 hover:bg-red-800' width='w-fit'>
           DELETE
         </Button>
       </div>
