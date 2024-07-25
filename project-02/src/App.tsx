@@ -4,8 +4,9 @@ import Modal from './components/ui/Modal';
 import { formInputsList, productList } from './data';
 import Button from './components/ui/Button';
 import Input from './components/ui/Input';
-import { IProduct } from './interfaces';
+import { IProduct, IErrorObj } from './interfaces';
 import { productValidation } from './validation';
+import ErrorMessage from './components/ErrorMessage';
 
 const App = () => {
   const defaultProductObj: IProduct = {
@@ -19,14 +20,26 @@ const App = () => {
       imageURL: '',
     },
   };
+  const defaultErrorObj: IErrorObj = {
+    title: '',
+    description: '',
+    price: '',
+    imageURL: '',
+  };
 
-  // ------------- Renders -------------
+  // ------------- States -------------
   const [product, setProduct] = useState(defaultProductObj);
+  const [errors, setErrors] = useState(defaultErrorObj);
   const [isOpen, setIsOpen] = useState(false);
 
   // ------------- Handlers -------------
-  const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
+  const closeModal = () => {
+    setIsOpen(false);
+    setProduct(defaultProductObj);
+    setErrors(defaultErrorObj);
+  };
+
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
 
@@ -34,11 +47,10 @@ const App = () => {
       ...product,
       [name]: value,
     });
+
+    setErrors({ ...errors, [name]: '' });
   };
-  const onCancel = (): void => {
-    setProduct(defaultProductObj);
-    closeModal();
-  };
+
   const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const { title, description, price, imageURL } = product;
@@ -50,16 +62,13 @@ const App = () => {
       imageURL,
     });
 
-    const canSubmit =
-      Object.values(errors).some(value => value === '') &&
-      Object.values(errors).every(value => value === '');
+    const hasErrors = Object.values(errors).some(value => value !== '');
 
-    if (!canSubmit) {
-      return;
+    if (hasErrors) {
+      setErrors(errors);
+    } else {
+      console.log('Send data to backend');
     }
-
-    console.log('errors:', errors);
-    console.log('canSubmit:', canSubmit);
   };
 
   // ------------- Renders -------------
@@ -81,11 +90,12 @@ const App = () => {
         value={product[input.name]}
         onChange={onChangeHandler}
       />
+      <ErrorMessage msg={errors[input.name]} />
     </div>
   ));
 
   return (
-    <main className='container mx-auto'>
+    <main className='container mx-auto my-3'>
       <Button className='bg-indigo-700 hover:bg-indigo-800' onClick={openModal}>
         Add Product
       </Button>
@@ -102,13 +112,16 @@ const App = () => {
             {renderFormInputList}
 
             <div className='flex items-center space-x-3'>
-              <Button className='bg-indigo-700 hover:bg-indigo-800'>
+              <Button
+                type='submit'
+                className='bg-indigo-700 hover:bg-indigo-800'>
                 Submit
               </Button>
               <Button
+                type='reset'
                 className='bg-gray-400 hover:bg-gray-500'
                 width='w-fit'
-                onClick={onCancel}>
+                onClick={closeModal}>
                 Cancel
               </Button>
             </div>

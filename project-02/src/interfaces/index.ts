@@ -19,3 +19,10 @@ export interface IFormInput {
   label: string;
   type: string;
 }
+
+export interface IErrorObj {
+  title: string;
+  description: string;
+  imageURL: string;
+  price: string;
+}

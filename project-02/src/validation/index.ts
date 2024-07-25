@@ -1,3 +1,5 @@
+import { IErrorObj } from '../interfaces';
+
 /**
  * Validates a product object for required fields and constraints.
  *
@@ -13,8 +15,9 @@
  * @property {string} imageURL - Error message for the imageURL field.
  * @property {string} price - Error message for the price field.
  */
-export const productValidation = (product: { title: string; description: string; imageURL: string; price: string }) => {
-  const errors: { [key: string]: string } = {
+
+export const productValidation = (product: IErrorObj) => {
+  const errors: IErrorObj = {
     title: '',
     description: '',
     imageURL: '',
@@ -23,12 +26,21 @@ export const productValidation = (product: { title: string; description: string;
 
   const isValidUrl = (url: string) => /^(ftp|http|https):\/\/[^ "]+$/.test(url);
 
-  if (!product.title.trim() || product.title.length < 10 || product.title.length > 80) {
+  if (
+    !product.title.trim() ||
+    product.title.length < 10 ||
+    product.title.length > 80
+  ) {
     errors.title = 'Product title must be between 10 and 80 characters!';
   }
 
-  if (!product.description.trim() || product.description.length < 10 || product.description.length > 900) {
-    errors.description = 'Product description must be between 10 and 900 characters!';
+  if (
+    !product.description.trim() ||
+    product.description.length < 10 ||
+    product.description.length > 900
+  ) {
+    errors.description =
+      'Product description must be between 10 and 900 characters!';
   }
 
   if (!product.imageURL.trim() || !isValidUrl(product.imageURL)) {
